@@ -1,8 +1,8 @@
 <h3>Uncovering the variation within epigenomic datasets using the Karhunen-Loeve Transform</h3>
 
 <h4> Requirements </h4>
-<a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
-<a href="http://hgdownload.cse.ucsc.edu/admin/exe/"> bigWigSummary </a> 
+- <a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
+- <a href="http://hgdownload.cse.ucsc.edu/admin/exe/"> bigWigSummary </a> 
 <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda: Functional Data Analysis </a> 
 <a href="http://cran.r-project.org/web/packages/ggplot2/index.html"> R package ggplot2 </a> 
 
