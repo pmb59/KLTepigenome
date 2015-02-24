@@ -11,7 +11,7 @@
 <p> [2]: File with regions in Bed Format </p> 
 <p> [3]: Length of genomic regions to analyze (Integer)</p> 
 <p> [4]: Number of B-spline basis (Integer)</p> 
-<p> [5]: Check integrity of the files (T/F). If True requires a *.chrom.sizes file in the folder.</p> 
+<p> [5]: Check integrity of the files (T/F). If True, requires a *.chrom.sizes file in the folder.</p> 
 <p> [6]: Remove ENCODE Blacklisted regions (T/F)</p> 
 
 <h5> Example: </h5>
