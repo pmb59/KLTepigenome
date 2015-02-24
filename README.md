@@ -7,14 +7,14 @@
 - <a href="http://cran.r-project.org/web/packages/ggplot2/index.html"> R package ggplot2 </a> 
 
 <h5> Parameters </h5>
-<p> 1: Bigwig File </p> 
-<p> 2: File with regions in Bed Format </p> 
-<p> 3: Length of genomic regions to analyze (Integer)</p> 
-<p> 4: B-spline basis (Integer)</p> 
-<p> 5: Check integrity of the files (T/F). If tru requires a *.chrom.sizes file.</p> 
-<p> 6: Remove ENCODE Blacklisted regions (T/F)</p> 
+<p> [1]: Bigwig File </p> 
+<p> [2]: File with regions in Bed Format </p> 
+<p> [3]: Length of genomic regions to analyze (Integer)</p> 
+<p> [4]: B-spline basis (Integer)</p> 
+<p> [5]: Check integrity of the files (T/F). If tru requires a *.chrom.sizes file.</p> 
+<p> [6]: Remove ENCODE Blacklisted regions (T/F)</p> 
 
-<h5> Example </h5>
+<h5> Example: </h5>
 
 <code>
 Rscript KLTepigenome.r H3K4me3.bw regions.bed 1500 150 T T
