@@ -1,4 +1,4 @@
-<h2>Uncovering the variation within epigenomic datasets using the Karhunen-Loeve Transform</h2>
+<h3>Uncovering the variation within epigenomic datasets using the Karhunen-Loeve Transform</h3>
 
 <h5> Requirements </h5>
 - <a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
