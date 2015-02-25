@@ -13,10 +13,10 @@
 <p> [4]: Number of B-spline basis (Integer)</p> 
 <p> [5]: Check integrity of the files (T/F). If True, requires a *.chrom.sizes file in the folder.</p> 
 <p> [6]: Remove ENCODE Blacklisted regions (T/F)</p> 
-<p> [7]: Prefix of out files (T/F)</p> 
+<p> [7]: Prefix of out files</p> 
 
 <h5> Example: </h5>
 
 <code>
-$ Rscript KLTepigenome.r H3K4me3.bw regions.bed 1500 150 T T out_prefix
+$ Rscript KLTepigenome.r H3K4me3.bw regions.bed 1500 150 T T H3K4_mark
 </code>
