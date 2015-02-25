@@ -3,6 +3,7 @@
 <h5> Requirements </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda: Functional Data Analysis </a> 
 - <a href="http://cran.r-project.org/web/packages/ggplot2/index.html"> R package ggplot2 </a> 
+- <a href="http://cran.r-project.org/web/packages/RColorBrewer/index.html"> RColorBrewer </a> 
 - <a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
 - <a href="http://hgdownload.cse.ucsc.edu/admin/exe/"> bigWigSummary </a> 
 
