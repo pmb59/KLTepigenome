@@ -17,5 +17,5 @@
 <h5> Example: </h5>
 
 <code>
-Rscript KLTepigenome.r H3K4me3.bw regions.bed 1500 150 T T
+$ Rscript KLTepigenome.r H3K4me3.bw regions.bed 1500 150 T T
 </code>
