@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#convert all wig files to bw
+#convert all wig files in the directory to bw format
 
 #get chrom.sizes information
 wget http://genome.ucsc.edu/goldenpath/help/hg19.chrom.sizes
