@@ -7,6 +7,8 @@
 - <a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
 - <a href="http://hgdownload.cse.ucsc.edu/admin/exe/"> bigWigSummary </a> 
 
+<h4> KLTepigenome.r </h5>
+
 <h5> Parameters </h5>
 <p> [1]: Bigwig File </p> 
 <p> [2]: File with regions in BED Format (columns 1,2,3,6 are required: chr, start, end, strand) </p> 
