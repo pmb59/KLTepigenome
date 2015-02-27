@@ -1,6 +1,8 @@
 #!/bin/bash
 
-#convert all wig files in the directory to bw format
+#convert all .wig.gz files in the directory to bw format
+
+gunzip *.wig.gz
 
 #get chrom.sizes information
 wget http://genome.ucsc.edu/goldenpath/help/hg19.chrom.sizes
