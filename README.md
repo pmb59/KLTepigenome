@@ -7,8 +7,10 @@
 - <a href="http://cran.r-project.org/web/packages/RColorBrewer/index.html"> R package RColorBrewer </a> 
 - <a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
 
-
+<ul style="list-style-type:circle">
+<li>
 <h4> KLTepigenome.r </h5>
+</li>
 
 <h5> Parameters </h5>
 <p> [1]: Bigwig File </p> 
@@ -28,6 +30,12 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 100
 
 <h5> Output: </h5>
 
+<li>
 <h4> propVarPlot.r </h5>
+</li>
 
+<li>
 <h4> corrMatrix.r </h5>
+</li>
+
+</ul>
