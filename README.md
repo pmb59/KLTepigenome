@@ -7,6 +7,8 @@
 - <a href="http://cran.r-project.org/web/packages/RColorBrewer/index.html"> R package RColorBrewer </a> 
 - <a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
 
+<p> Scripts: </p> 
+
 <ul style="list-style-type:circle">
 <li>
 <h4> KLTepigenome.r </h5>
@@ -20,12 +22,14 @@
 <p> [5]: Check integrity of the files (T/F). If True, requires a *.chrom.sizes file in the folder.</p> 
 <p> [6]: Remove ENCODE Blacklisted regions (T/F)</p> 
 <p> [7]: Prefix of output files</p> 
-<p> [8]: Number of bins to be used in the heatmap</p> 
+<p> [8]: Number of functional principal components to compute</p> 
+<p> [9]: Number of functional principal components to plot</p> 
+<p> [10]: Number of bins to be used in the heatmap</p> 
 
 <h5> Example: </h5>
 
 <code>
-$ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 100
+$ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 </code>
 
 <h5> Output: </h5>
