@@ -6,6 +6,7 @@
 - <a href="http://github.com/BIMSBbioinfo/genomation"> R package genomation </a>  
 - <a href="http://cran.r-project.org/web/packages/RColorBrewer/index.html"> R package RColorBrewer </a> 
 - <a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
+- - <a href="http://hgdownload.cse.ucsc.edu/admin/exe/"> UCSC bigWigSummary </a> 
 
 <p> Scripts: </p> 
 
