@@ -16,7 +16,7 @@
 </li>
 
 <h5> Parameters </h5>
-<p> [1]: Bigwig File </p> 
+<p> [1]: bigWig File </p> 
 <p> [2]: File with regions in BED Format (columns 1,2,3,6 are required: chr, start, end, strand) </p> 
 <p> [3]: Length of genomic regions to analyze (Integer)</p> 
 <p> [4]: Number of B-spline basis (Integer)</p> 
