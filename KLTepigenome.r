@@ -1,116 +1,140 @@
 #R script to perform functional Karhunen-Loeve Transform (KLT) in epigenomic data
-#Please cite:
-#Uncovering the variation within epigenomic datasets using the Karhunen-Loeve transform
-args<-commandArgs(TRUE)
+#Please cite: "Uncovering the variation within epigenomic datasets using the Karhunen-Loeve transform"
+
+args<-commandArgs(TRUE);
+
+#Remove scientific notation
+options(scipen=999)
+
+#Required R packages
 library(fda)
 library(ggplot2)
+library(RColorBrewer)
+library(genomation)
+library(GenomicRanges)
+currentDir <- getwd() 
 
-load("TSS.Rda")
+regions <- read.table(as.character(args[2]), head=F)  
 
-#pdf(file="all.pdf")
-
-#FILE="hg19.100way.phastCons.bw"
-FILE=as.character(args[1])
+#bigWig file
+FILE <- as.character(args[1])
+#Output Prefix
+id <- as.character(args[7])
 
 
 #Prepare regions
-#Extension
-EXT = 1500 # bp
+#Extension (bp)
+EXT <- as.numeric(args[3]) 
 #Number of B-Splines
-NB = 150
+NB <- as.numeric(args[4]) 
+#Number of bins for the heatmap
+NBins <- as.numeric(args[10])
+#Number of functional principal components to compute
+pcT <- as.numeric(args[8]) 
+#Number of functional principal components to plot
+pcP <- as.numeric(args[9]) 
 
+CHR <- as.character(regions[,1])
+STRAND <- as.character(regions[,6])
+centre <- round ( (regions[,2] + regions[,3]) /2)
 START <- centre - EXT
 END <- centre + EXT  
-#STRAND=strand(x)    
+
+GENE <- as.character(regions[,7]) 
 
 # Check integrity of the regions
-chromos <- read.table("hg19.chrom.sizes",head=F)
+if(as.character(args[5]) == "TRUE" | as.character(args[5]) == "T"){
 
-valid <- c()
-for (k in 1:length(CHR)){
+  chromos <- read.table("hg19.chrom.sizes",head=F)
 
-        locata <- which( chromos$V1 == CHR[k] )
-        if (length(locata)==1){                    #e.g. chrGL000213.1
-        	if (as.integer(START[k])>0  & as.integer(END[k]) < chromos$V2[locata] ) { valid <- c(valid,k) }
-        }
+  valid <- c()
+  for (k in 1:length(CHR)){
 
-}
+    locata <- which( chromos$V1 == CHR[k] )
+      if (length(locata)==1){                    #e.g. chrGL000213.1
+        if (as.integer(START[k])>0  & as.integer(END[k]) < chromos$V2[locata] ) { valid <- c(valid,k) }
+      }
+  }
 
-START <- START[valid]
-END <- END[valid]
-CHR <- CHR[valid]
+START  <- START[valid]
+END    <- END[valid]
+CHR    <- CHR[valid]
 STRAND <- STRAND[valid]
 
-#OK
+GENE   <- GENE[valid]
+}
+
 
 # REMOVE ENCODE Blacklisted regions
-#(do this in temp folder)
+#(do this in temp folder!)
+system(paste('cp -n wgEncodeDacMapabilityConsensusExcludable.bed',tempdir(),sep=" "), intern=FALSE);
+setwd(tempdir())
 
-write.table(cbind(CHR,START,END,STRAND), file = "original.bed", append = FALSE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
-system('bedtools intersect -wa -v -a original.bed -b wgEncodeDacMapabilityConsensusExcludable.bed  > intersect.bed', intern=FALSE);
-NEWbed <- read.table("intersect.bed",head=F)
-START <-  NEWbed[,2]
-END <-   NEWbed[,3]
-CHR <- NEWbed[,1]
-STRAND <-  NEWbed[,4]
-system('rm original.bed', intern=FALSE);
-system('rm intersect.bed', intern=FALSE);
+if(as.character(args[6]) == "TRUE" | as.character(args[6]) == "T"){
+  
+  write.table(cbind(CHR,START,END,STRAND,GENE), file =paste(id, "original.bed",sep="_"), append = FALSE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
+  system(paste('bedtools intersect -wa -v -a',paste(id,'original.bed',sep="_"),'-b wgEncodeDacMapabilityConsensusExcludable.bed  >', paste(id,"intersect.bed",sep="_"),sep=" "), intern=FALSE);
+  #regions used:
+  system(paste('cp',paste(id,'intersect.bed',sep="_"), currentDir,sep=" "), intern=FALSE);
+
+  notBlacklisted <- read.table(paste(id,"intersect.bed",sep="_"),head=F)
+  #readGeneric (genomation)
+  peaks <- readGeneric(paste(id,"intersect.bed",sep="_"), header=F, keep.all.metadata = TRUE, strand = 4)
 
 
-for (j in 1:length(FILE)){   #  length(FILE)
+  CHR    <- notBlacklisted[,1]
+  START  <- notBlacklisted[,2]
+  END    <- notBlacklisted[,3]
+  STRAND <- notBlacklisted[,4]
+  system(paste('rm',paste(id,'original.bed',sep="_"),sep=" "), intern=FALSE);
+  system(paste('rm',paste(id,'intersect.bed',sep="_"),sep=" "), intern=FALSE);
 
-
-#library(ChIPpeakAnno)
-#data(TSS.human.GRCh37)
-#x<- TSS.human.GRCh37
-#centre <- rep(NA,dim(x)[1])
-#fw <- which(strand(x)==1);
-#rv <- which(strand(x)==-1);
-#temp <- as.data.frame(ranges(x))
-#centre[fw] <- temp$start[fw]
-#centre[rv] <- temp$end[rv]
-# regions
-#CHR <- paste("chr",as.character(space(x)),"",sep="")
+}
+setwd(currentDir)
 
 
 
-lMot=1
+#Create FDA matrix
+fdamatrix <- matrix(0.0,ncol=1+2*EXT, nrow= length(CHR))   
 
-fdamatrix <- matrix(0.0,ncol=lMot+2*EXT, nrow= length(CHR))   # automate this, length(CHR)
-
-
+#Deprecated:
+setwd(tempdir())
 
 for (i in 1:length(CHR)) {
 
-	CR <- c()
-    	cmmd <- paste('./bigWigSummary', paste(FILE[j],".bw",sep=""), CHR[i], as.integer(START[i]), as.integer(END[i]), as.integer(lMot+2*EXT), paste("> tempR_",".txt",sep=args[1]), sep=' ')
+  cmmd <- paste('bigWigSummary', FILE, CHR[i], as.integer(START[i]), as.integer(END[i]), as.integer(1+2*EXT), paste("> tempR_",".txt",sep=id), sep=' ')
+  x <- system(cmmd, intern=FALSE);
     	
-	x <- system(cmmd, intern=FALSE);
-    	
+  if(length(readLines(paste("tempR_",".txt",sep=id)))>0) {   #if no data the file is empty 
 
-    	if(length(readLines(paste("tempR_",".txt",sep=args[1])))>0) {   #if no data the file is empty 
-#	if(length(x)==1) {
+    x <- as.numeric( strsplit(x= readLines(paste("tempR_",".txt",sep=id)) ,split="\t")[[1]])
 
-		x <- as.numeric( strsplit(x= readLines(paste("tempR_",".txt",sep=args[1])) ,split="\t")[[1]])
+		if(STRAND[i]=="+")  { fdamatrix[i,] <- x }        #     
+		if(STRAND[i]=="-")  { fdamatrix[i,] <- rev(x) }   #    
 
-		if(STRAND[i]==1)  { fdamatrix[i,] <- x }        #     as.numeric(strsplit(x=x, split="\t")[[1]]) }
-		if(STRAND[i]==-1) { fdamatrix[i,] <- rev(x) }   #     rev(as.numeric(strsplit(x=x, split="\t")[[1]])) }
-		#CR <- which( is.na(fdamatrix[i,]) ==TRUE | is.nan(fdamatrix[i,]) ==TRUE  )
-		#fdamatrix[i,CR] <- 0.0
-#	}
-		write.table(i, file = paste("tss_used_",".txt",sep=FILE[j]), append = TRUE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
-
-	}
-		
-		
-	rm(x,CR)
-	system(paste("rm",paste("tempR_",".txt",sep=args[1]) ,sep=' '), intern=FALSE);
+	}		
+	rm(x)
+	system(paste("rm",paste("tempR_",".txt",sep=id) ,sep=' '), intern=FALSE);
 	
-
-
 }
+setwd(currentDir)
+
+#Genomation heatmap
+nBins = NBins
+scaleData=FALSE
+#Read bigWig
+sm <- ScoreMatrixBin(target = FILE, bin.num = nBins, windows = peaks, type="bigWig",strand.aware = TRUE)
+pdf(file=paste(id,"_heatmap.pdf", sep=""), height=6.5, width=3)
+heatMatrix(sm, kmeans=FALSE, k=3,order=TRUE, legend.name=c("Normalized coverage"),xlab=paste("bp \n",nrow(sm)," regions",sep=""), main=id, xcoords =c(-EXT, EXT) ,winsorize=c(0,99), col=c("darkblue","yellow"))  
+dev.off()
+
+#fdamatrix <- sm
 
 
+
+
+
+#Deprecated:
 
 # here we have the matrix with all the profiles
 # Correct non-numeric values
@@ -121,135 +145,69 @@ fdamatrix[which(is.numeric(fdamatrix)==FALSE)] <- 0.0
 
 
 
-#library(ggplot2)
-
-#GGP <- data.frame(meanG=as.vector(as.matrix(fdamatrix)), tssG=rep(-EXT:EXT,length(CHR) ))
-#c <- ggplot(GGP , aes(tssG, meanG))
-##c + stat_smooth()
-#c + stat_smooth(fill="blue", colour="darkblue", size=2, alpha = 0.2)+ ggtitle(FILE[j]) +  theme(axis.text = element_text(size = rel(1.8)), axis.title.y = element_text(size = rel(1.8)), axis.title.x = element_text(size = rel(1.8)),plot.title = element_text(size=rel(2.5), face="bold")) + ylab('Smoothed read pileup') + xlab('TSS') + geom_vline(xintercept = 0, linetype=2)
-#
-#ggsave(paste(FILE[j],".pdf", sep="_ggplot2"))
-
-
-
-pdf(file=paste(FILE[j],".pdf", sep=""))
-
-par(mar=c(5,4,4,5)+.1)
-
-
-library(fda)
 bspl <- create.bspline.basis(rangeval=c(-EXT,EXT),nbasis=NB, norder=4)
 argvalsBS <- -EXT:EXT
 fdaData <- Data2fd(y=t(fdamatrix), argvals= argvalsBS, basisobj=bspl)
-#plot(fdaData)  #xlim=c(-EXT-0.5*lMot,0.5*lMot+EXT )
-
 
 # perform pca
-pc<- pca.fd(fdobj=fdaData, nharm = 3, harmfdPar=fdPar(fdaData),centerfns = TRUE)
-## plot components
-#plot(pc$harmonics, frame=FALSE, cex.lab=1.6,lwd=2, main=FILE[j])
-#abline(v=0, lty=4, col="darkgray")
+pc<- pca.fd(fdobj=fdaData, nharm = pcT, harmfdPar=fdPar(fdaData),centerfns = TRUE)
+#variance
+write.table(pc$varprop, file = paste(id, "varprop.txt",sep="_"), append = FALSE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
+#scores
+write.table(pc$scores, file = paste(id,"scores.txt",sep="_"), append = FALSE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
 
-pc<- pca.fd(fdobj=fdaData, nharm = 10, harmfdPar=fdPar(fdaData),centerfns = TRUE)
+#colorcode 4 components
+cl <- colorRampPalette(brewer.pal(pcT,"Set1"))(pcT) #equal number
 
-plot(-EXT:EXT,eval.fd(argvalsBS,pc$meanfd) ,frame=FALSE, type='l', col='black', lwd=2, ylab="Mean", xlab="TSS", cex.lab=1.6,main=FILE[j],cex.main=1.6, cex.axis=1.6, cex.names=1.6 )
-#frame=FALSE;colMeans(fdamatrix)
+pdf(file=paste(id,"_components.pdf", sep=""), width=3.5, height=3.5)
 
+for (p in 1:pcP){
+  par(mar=c(5,4,4,5)+.1)
+#  plot(-EXT:EXT,eval.fd(argvalsBS,pc$meanfd) ,frame=FALSE, type='l', col='gray', lty=2, lwd=2, ylab="Mean", xlab="bp", cex.lab=1.4,main=id,cex.main=1.4, cex.axis=1.4, cex.names=1.4 )
+#  par(new=TRUE)
+  plot(-EXT:EXT, eval.fd(argvalsBS,pc$harmonics[p]),frame=FALSE ,type="l",col=cl[p],xlab="bp",main=paste(100*round(pc$varprop[p],3),"%",sep=""),ylab=paste("FPC" , as.character(p),sep="" ), lwd=2, cex.axis=1.1)
+#  axis(4)
+#  mtext(paste(paste(paste("FPC" , "(", sep=as.character(p)),100*round(pc$varprop[p],3),sep= ""),"%)",sep=""),side=4,line=3, cex=1.4)
+  #legend("topleft",col=c("black","darkblue"),lty=c(2,1),legend=c("Mean","FPC1"), bty="n", lwd=3)
+  #abline(v=0, lty=2, col="darkgray", lwd=2)
+}
+dev.off()
 
-par(new=TRUE)
-plot(-EXT:EXT, eval.fd(argvalsBS,pc$harmonics[1]),frame=FALSE ,type="l",col="darkblue",xaxt="n",yaxt="n",xlab="",ylab="", lwd=2, cex.axis=1.6)
-axis(4)
-mtext(paste(paste("FPC1 (",100*round(pc$varprop[1],3),sep= ""),"%)",sep=""),side=4,line=3, cex=1.6)
-legend("topleft",col=c("black","darkblue"),lty=1,legend=c("Mean","FPC1"), bty="n", lwd=3)
-abline(v=0, lty=2, col="darkgray", lwd=2)
-
-write.table(t(pc$varprop), file = paste("varprop_", ".txt",sep=FILE[j] ), append = TRUE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
-
-write.table(pc$scores, file = paste("scores_",".txt",sep=FILE[j]), append = FALSE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
-
-
-par(mar=c(5,4,4,5)+.1)
-         
-plot(-EXT:EXT,eval.fd(argvalsBS,pc$meanfd),frame=FALSE, type='l', col='black', lwd=2, ylab="Mean", xlab="TSS", cex.lab=1.6,main=FILE[j],cex.main=1.6, cex.axis=1.6, 
-cex.names=1.6 )  
-#frame=FALSE
-
-par(new=TRUE)
-plot(-EXT:EXT, eval.fd(argvalsBS,pc$harmonics[2]),frame=FALSE ,type="l",col="darkred",xaxt="n",yaxt="n",xlab="",ylab="", lwd=2, cex.axis=1.6)
-axis(4)
-mtext(paste(paste("FPC2 (",100*round(pc$varprop[2],3),sep= ""),"%)",sep=""),side=4,line=3, cex=1.6)
-legend("topleft",col=c("black","darkred"),lty=1,legend=c("Mean","FPC2"), bty="n", lwd=3)
-abline(v=0, lty=2, col="darkgray", lwd=2)
-
-#3rd component:
+#save components valued-vector
+for (p in 1:pcT){
+write.table(t(eval.fd(argvalsBS,pc$harmonics[p])), file = paste(id, "components.txt",sep="_"), append = TRUE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
+}
 
 
-par(mar=c(5,4,4,5)+.1)
 
-plot(-EXT:EXT,eval.fd(argvalsBS,pc$meanfd),frame=FALSE, type='l', col='black', lwd=2, ylab="Mean", xlab="TSS", cex.lab=1.6,main=FILE[j],cex.main=1.6, cex.axis=1.6, 
-cex.names=1.6 )  
-#frame=FALSE
 
-par(new=TRUE)
-plot(-EXT:EXT, eval.fd(argvalsBS,pc$harmonics[3]),frame=FALSE ,type="l",col="darkgreen",xaxt="n",yaxt="n",xlab="",ylab="", lwd=2, cex.axis=1.6)
-axis(4)
-mtext(paste(paste("FPC3 (",100*round(pc$varprop[3],3),sep= ""),"%)",sep=""),side=4,line=3, cex=1.6)
-legend("topleft",col=c("black","darkgreen"),lty=1,legend=c("Mean","FPC3"), bty="n", lwd=3)
-abline(v=0, lty=2, col="darkgray", lwd=2)
 
+
+pdf(file=paste(id,"_barplot.pdf", sep=""), width=3.5, height=3.5)
+
+#par(mfrow=c(1,2))
+
+#plot(pc$harmonics[1:pcP],frame=FALSE, lwd=2, ylab="Values", xlab="bp", cex.lab=1.3,main=id,cex.main=2, cex.axis=1.3 ,col=cl[1:pcP])
+##abline(v=0, lty=2, col="darkgray", lwd=2)
+barplot(height=100*round(pc$varprop[1:pcT],3), col=cl , names.arg="", ylab="%",las=3,border=NA,space=0, main="ranked 50 components")
+#names.arg=paste("FPC",1:pcT, sep="")
 dev.off()
 
 
-pdf(file=paste(FILE[j],"_3FPCs.pdf", sep=""))
-
-plot(pc$harmonics[1:3],frame=FALSE, lwd=2, ylab="Values", xlab="TSS", cex.lab=1.6,main=FILE[j],cex.main=2, cex.axis=1.6, cex.names=1.6 )
-abline(v=0, lty=2, col="darkgray", lwd=2)
-
-dev.off()
 
 
-#dev.off()
-
-
+png(filename=paste(id,"_mean_sd.png", sep=""), width=400, height=400)
 
 SD <- sd.fd(fdobj=fdaData)
 M <- mean.fd(x=fdaData)
 
-Mgg    <- data.frame( mean = c(eval.fd(argvalsBS,M), eval.fd(argvalsBS,M)+ eval.fd(argvalsBS,SD), eval.fd(argvalsBS,M)- eval.fd(argvalsBS,M)), tssG = rep(argvalsBS,3), clase=c(rep("Mean",length(argvalsBS)), rep("SD",2*length(argvalsBS))   ) )
+Mgg    <- data.frame( mean = c(eval.fd(argvalsBS,M), eval.fd(argvalsBS,M)+ eval.fd(argvalsBS,SD), eval.fd(argvalsBS,M)- eval.fd(argvalsBS,SD)), tssG = rep(argvalsBS,3), clase=c(rep("Mean",length(argvalsBS)), rep("s.d.",2*length(argvalsBS))   ) )
 
-library(ggplot2)
 
 ff <- ggplot(Mgg , aes(tssG, mean))
-ff +  geom_line(aes(colour = clase)) + scale_colour_brewer(type="seq",guide=FALSE) + ggtitle(FILE[j])  + ylab('Smoothed read pileup') + xlab('TSS') + geom_vline(xintercept = 0, linetype=2) +  theme(axis.text = element_text(size = rel(1.8)), axis.title.y = element_text(size  = rel(1.8)), axis.title.x = element_text(size = rel(1.8)), plot.title = element_text(size=rel(2.5), face="bold")) + geom_line(data = data.frame( mean = eval.fd(argvalsBS,M),  tssG=argvalsBS)  , colour = "darkblue", size=1.8) 
+ff +  geom_line(aes(colour = clase))  + ggtitle(id)  + ylab('Normalized coverage') + xlab('Distance from TSS') + geom_vline(xintercept = 0, linetype=2) + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))    +  theme(axis.text = element_text(size = rel(1.5)), axis.title.y = element_text(size  = rel(1.5)), axis.title.x = element_text(size = rel(1.5)), plot.title = element_text(size=rel(2.5), face="bold")) + geom_line(data = data.frame( mean = eval.fd(argvalsBS,M),  tssG=argvalsBS)  , colour = "gold", size=1.6)  
 
 
-#Mgg    <- data.frame( mean = eval.fd(argvalsBS,pc$meanfd) , tssG = argvalsBS )
-#MggSDp <- data.frame( meanG= eval.fd(argvalsBS,pc$meanfd)+ eval.fd(argvalsBS,SD) , tssG=rep(-EXT:EXT,length(CHR) )) 
-#MggSDm <- data.frame( meanG= eval.fd(argvalsBS,pc$meanfd)- eval.fd(argvalsBS,SD) , tssG=rep(-EXT:EXT,length(CHR) ))
-#
-#library(ggplot2)
-#
-#ff <- ggplot(Mgg , aes(tssG, mean))
-#ff +  geom_line(colour = "darkblue", size = 2) + ggtitle(FILE[j])  + ylab('Smoothed read pileup') + xlab('TSS') + geom_vline(xintercept = 0, linetype=2)
-#c +  theme(axis.text = element_text(size = rel(1.8)), axis.title.y = element_text(size  = rel(1.8)), axis.title.x = element_text(size = rel(1.8)), plot.title = element_text(size=rel(2.5), face="bold"))
-
-
-ggsave(paste(FILE[j],".pdf", sep="_ggplot2"))
-
-#rm(fdaData, bspl, START, END, STRAND, chromos)
-#gc(reset=TRUE)
-#library(ggplot2)
-#GGP <- data.frame(meanG=as.vector(as.matrix(fdamatrix)), tssG=rep(-EXT:EXT,length(CHR) ))
-#c <- ggplot(GGP , aes(tssG, meanG))
-##c + stat_smooth()
-#c + stat_smooth(method="glm", n=100, fill="blue", colour="darkblue", size=2, alpha = 0.2)+ ggtitle(FILE[j]) +  theme(axis.text = element_text(size = rel(1.8)), axis.title.y = element_text(size  = rel(1.8)), axis.title.x = element_text(size = rel(1.8)),plot.title = element_text(size=rel(2.5), face="bold")) + ylab('Smoothed read pileup') + xlab('TSS') + geom_vline(xintercept = 0, linetype=2)
-#ggsave(paste(FILE[j],".pdf", sep="_ggplot2"))
-
- }
- 
-
-
-
-
+dev.off()
 
 
