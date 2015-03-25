@@ -3,7 +3,7 @@
 
 args<-commandArgs(TRUE);
 
-#Remove scientific notation
+#Disable scientific notation
 options(scipen=999)
 
 #Required R packages
@@ -21,13 +21,11 @@ FILE <- as.character(args[1])
 #Output Prefix
 id <- as.character(args[7])
 
-
-#Prepare regions
 #Extension (bp)
 EXT <- as.numeric(args[3]) 
 #Number of B-Splines
 NB <- as.numeric(args[4]) 
-#Number of bins for the heatmap
+#Number of bins for the heatmap plot
 NBins <- as.numeric(args[10])
 #Number of functional principal components to compute
 pcT <- as.numeric(args[8]) 
@@ -144,32 +142,28 @@ fdamatrix[which(is.numeric(fdamatrix)==FALSE)] <- 0.0
 
 
 
-
+#Create Functional Data Object
 bspl <- create.bspline.basis(rangeval=c(-EXT,EXT),nbasis=NB, norder=4)
 argvalsBS <- -EXT:EXT
 fdaData <- Data2fd(y=t(fdamatrix), argvals= argvalsBS, basisobj=bspl)
 
-# perform pca
+# perform functional pca
 pc<- pca.fd(fdobj=fdaData, nharm = pcT, harmfdPar=fdPar(fdaData),centerfns = TRUE)
-#variance
+#save proportions of variance
 write.table(pc$varprop, file = paste(id, "varprop.txt",sep="_"), append = FALSE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
-#scores
+#save FPC scores
 write.table(pc$scores, file = paste(id,"scores.txt",sep="_"), append = FALSE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
 
-#colorcode 4 components
+#colorcode
 cl <- colorRampPalette(brewer.pal(pcT,"Set1"))(pcT) #equal number
 
 pdf(file=paste(id,"_components.pdf", sep=""), width=3.5, height=3.5)
 
 for (p in 1:pcP){
   par(mar=c(5,4,4,5)+.1)
-#  plot(-EXT:EXT,eval.fd(argvalsBS,pc$meanfd) ,frame=FALSE, type='l', col='gray', lty=2, lwd=2, ylab="Mean", xlab="bp", cex.lab=1.4,main=id,cex.main=1.4, cex.axis=1.4, cex.names=1.4 )
-#  par(new=TRUE)
+
   plot(-EXT:EXT, eval.fd(argvalsBS,pc$harmonics[p]),frame=FALSE ,type="l",col=cl[p],xlab="bp",main=paste(100*round(pc$varprop[p],3),"%",sep=""),ylab=paste("FPC" , as.character(p),sep="" ), lwd=2, cex.axis=1.1)
-#  axis(4)
-#  mtext(paste(paste(paste("FPC" , "(", sep=as.character(p)),100*round(pc$varprop[p],3),sep= ""),"%)",sep=""),side=4,line=3, cex=1.4)
-  #legend("topleft",col=c("black","darkblue"),lty=c(2,1),legend=c("Mean","FPC1"), bty="n", lwd=3)
-  #abline(v=0, lty=2, col="darkgray", lwd=2)
+
 }
 dev.off()
 
@@ -180,34 +174,17 @@ write.table(t(eval.fd(argvalsBS,pc$harmonics[p])), file = paste(id, "components.
 
 
 
-
-
-
 pdf(file=paste(id,"_barplot.pdf", sep=""), width=3.5, height=3.5)
-
-#par(mfrow=c(1,2))
-
-#plot(pc$harmonics[1:pcP],frame=FALSE, lwd=2, ylab="Values", xlab="bp", cex.lab=1.3,main=id,cex.main=2, cex.axis=1.3 ,col=cl[1:pcP])
-##abline(v=0, lty=2, col="darkgray", lwd=2)
 barplot(height=100*round(pc$varprop[1:pcT],3), col=cl , names.arg="", ylab="%",las=3,border=NA,space=0, main="ranked 50 components")
-#names.arg=paste("FPC",1:pcT, sep="")
 dev.off()
 
 
-
-
 png(filename=paste(id,"_mean_sd.png", sep=""), width=400, height=400)
-
 SD <- sd.fd(fdobj=fdaData)
 M <- mean.fd(x=fdaData)
-
 Mgg    <- data.frame( mean = c(eval.fd(argvalsBS,M), eval.fd(argvalsBS,M)+ eval.fd(argvalsBS,SD), eval.fd(argvalsBS,M)- eval.fd(argvalsBS,SD)), tssG = rep(argvalsBS,3), clase=c(rep("Mean",length(argvalsBS)), rep("s.d.",2*length(argvalsBS))   ) )
-
-
 ff <- ggplot(Mgg , aes(tssG, mean))
 ff +  geom_line(aes(colour = clase))  + ggtitle(id)  + ylab('Normalized coverage') + xlab('Distance from TSS') + geom_vline(xintercept = 0, linetype=2) + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))    +  theme(axis.text = element_text(size = rel(1.5)), axis.title.y = element_text(size  = rel(1.5)), axis.title.x = element_text(size = rel(1.5)), plot.title = element_text(size=rel(2.5), face="bold")) + geom_line(data = data.frame( mean = eval.fd(argvalsBS,M),  tssG=argvalsBS)  , colour = "gold", size=1.6)  
-
-
 dev.off()
 
 
