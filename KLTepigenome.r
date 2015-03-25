@@ -1,10 +1,9 @@
 #R script to perform functional Karhunen-Loeve Transform (KLT) in epigenomic data
+#
 #Please cite: "Uncovering the variation within epigenomic datasets using the Karhunen-Loeve transform"
 
 args<-commandArgs(TRUE);
-
-#Disable scientific notation
-options(scipen=999)
+options(scipen=999);
 
 #Required R packages
 library(fda)
@@ -20,7 +19,6 @@ regions <- read.table(as.character(args[2]), head=F)
 FILE <- as.character(args[1])
 #Output Prefix
 id <- as.character(args[7])
-
 #Extension (bp)
 EXT <- as.numeric(args[3]) 
 #Number of B-Splines
@@ -33,11 +31,10 @@ pcT <- as.numeric(args[8])
 pcP <- as.numeric(args[9]) 
 
 CHR <- as.character(regions[,1])
+START <- centre - EXT
+END <- centre + EXT
 STRAND <- as.character(regions[,6])
 centre <- round ( (regions[,2] + regions[,3]) /2)
-START <- centre - EXT
-END <- centre + EXT  
-
 GENE <- as.character(regions[,7]) 
 
 # Check integrity of the regions
@@ -49,7 +46,7 @@ if(as.character(args[5]) == "TRUE" | as.character(args[5]) == "T"){
   for (k in 1:length(CHR)){
 
     locata <- which( chromos$V1 == CHR[k] )
-      if (length(locata)==1){                    #e.g. chrGL000213.1
+      if (length(locata)==1){              
         if (as.integer(START[k])>0  & as.integer(END[k]) < chromos$V2[locata] ) { valid <- c(valid,k) }
       }
   }
@@ -58,13 +55,12 @@ START  <- START[valid]
 END    <- END[valid]
 CHR    <- CHR[valid]
 STRAND <- STRAND[valid]
-
 GENE   <- GENE[valid]
 }
 
 
 # REMOVE ENCODE Blacklisted regions
-#(do this in temp folder!)
+#(do this in temp dir)
 system(paste('cp -n wgEncodeDacMapabilityConsensusExcludable.bed',tempdir(),sep=" "), intern=FALSE);
 setwd(tempdir())
 
@@ -72,13 +68,12 @@ if(as.character(args[6]) == "TRUE" | as.character(args[6]) == "T"){
   
   write.table(cbind(CHR,START,END,STRAND,GENE), file =paste(id, "original.bed",sep="_"), append = FALSE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
   system(paste('bedtools intersect -wa -v -a',paste(id,'original.bed',sep="_"),'-b wgEncodeDacMapabilityConsensusExcludable.bed  >', paste(id,"intersect.bed",sep="_"),sep=" "), intern=FALSE);
-  #regions used:
+  #Save regions kept:
   system(paste('cp',paste(id,'intersect.bed',sep="_"), currentDir,sep=" "), intern=FALSE);
 
   notBlacklisted <- read.table(paste(id,"intersect.bed",sep="_"),head=F)
   #readGeneric (genomation)
   peaks <- readGeneric(paste(id,"intersect.bed",sep="_"), header=F, keep.all.metadata = TRUE, strand = 4)
-
 
   CHR    <- notBlacklisted[,1]
   START  <- notBlacklisted[,2]
@@ -86,7 +81,6 @@ if(as.character(args[6]) == "TRUE" | as.character(args[6]) == "T"){
   STRAND <- notBlacklisted[,4]
   system(paste('rm',paste(id,'original.bed',sep="_"),sep=" "), intern=FALSE);
   system(paste('rm',paste(id,'intersect.bed',sep="_"),sep=" "), intern=FALSE);
-
 }
 setwd(currentDir)
 
@@ -126,20 +120,14 @@ pdf(file=paste(id,"_heatmap.pdf", sep=""), height=6.5, width=3)
 heatMatrix(sm, kmeans=FALSE, k=3,order=TRUE, legend.name=c("Normalized coverage"),xlab=paste("bp \n",nrow(sm)," regions",sep=""), main=id, xcoords =c(-EXT, EXT) ,winsorize=c(0,99), col=c("darkblue","yellow"))  
 dev.off()
 
-#fdamatrix <- sm
+##fdamatrix <- sm
 
-
-
-
-
-#Deprecated:
 
 # here we have the matrix with all the profiles
-# Correct non-numeric values
+# Correct non-numeric values if case they are present
 fdamatrix[which(is.na(fdamatrix)==TRUE)] <- 0.0
 fdamatrix[which(is.nan(fdamatrix)==TRUE)] <- 0.0
 fdamatrix[which(is.numeric(fdamatrix)==FALSE)] <- 0.0
-
 
 
 #Create Functional Data Object
@@ -167,17 +155,15 @@ for (p in 1:pcP){
 }
 dev.off()
 
-#save components valued-vector
+#save valued-vector with component values
 for (p in 1:pcT){
 write.table(t(eval.fd(argvalsBS,pc$harmonics[p])), file = paste(id, "components.txt",sep="_"), append = TRUE, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
 }
 
 
-
 pdf(file=paste(id,"_barplot.pdf", sep=""), width=3.5, height=3.5)
 barplot(height=100*round(pc$varprop[1:pcT],3), col=cl , names.arg="", ylab="%",las=3,border=NA,space=0, main="ranked 50 components")
 dev.off()
-
 
 png(filename=paste(id,"_mean_sd.png", sep=""), width=400, height=400)
 SD <- sd.fd(fdobj=fdaData)
