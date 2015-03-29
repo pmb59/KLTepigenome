@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#convert all .wig.gz files in the directory to bigWig (.bw) format
+#convert all .wig.gz files in the current directory to bigWig (.bw) format
 
 gunzip *.wig.gz
 
