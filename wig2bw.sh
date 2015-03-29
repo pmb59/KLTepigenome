@@ -4,8 +4,12 @@
 
 gunzip *.wig.gz
 
-#get chrom.sizes information
+#get chrom sizes information for hg19
 wget http://genome.ucsc.edu/goldenpath/help/hg19.chrom.sizes
+#get UCSC wigToBigWig for Linux x86 64
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/wigToBigWig
+#get UCSC wigToBigWig for mac OSX x86 64
+#wget http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/wigToBigWig
 
 n=$(ls *.wig | sed -e 's/\..*$//')
 
