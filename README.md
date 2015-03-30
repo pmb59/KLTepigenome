@@ -57,4 +57,16 @@ propVarPlot.pdf
 <h4> corrMatrix.r </h5>
 </li>
 
+<h5> Parameters </h5>
+<p> [1]:  </p> 
+<p> [2]:  </p> 
+<p> [3]:  </p> 
+<p> [4]: p-value  </p> 
+
+<h5> Example: </h5>
+
+<code>
+Rscript corrMatrix.r H3K9ac_mark H3K4me3_mark H3K9ac-H3K4me3 1e-6
+</code>
+
 </ul>
