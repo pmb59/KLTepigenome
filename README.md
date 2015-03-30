@@ -39,6 +39,8 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 <h4> propVarPlot.r </h5>
 </li>
 
+<img src="graph_legend.png" />
+
 <li>
 <h4> corrMatrix.r </h5>
 </li>
