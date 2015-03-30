@@ -39,7 +39,14 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 <h4> propVarPlot.r </h5>
 </li>
 
-<img src="graph_legend.png" />
+<h5> Parameters </h5>
+<p> [1]: List of *_varprop.txt files with proportions of variance </p> 
+
+<h5> Example: </h5>
+
+<code>
+Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z_mark_varprop.txt
+</code>
 
 <li>
 <h4> corrMatrix.r </h5>
