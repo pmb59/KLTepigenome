@@ -49,7 +49,7 @@ $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z
 </code>
 
 <h5> Output files: </h5>
-propVarPlot.pdf
+propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of variance explained (%)
 
 
 
@@ -68,6 +68,9 @@ Rscript FPCcorrelation.r H3K4me1 H3K4me2 H3K4me3
 </code>
 
 <h5> Output files: </h5>
+<p> cor_Scores.csv: A  </p>
+<p> cor_Scores_#Eigenfunctions.csv:  </p>
+<p> cor_Eigenfunctions.csv:  </p>
 
 
 </ul>
