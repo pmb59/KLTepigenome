@@ -2,10 +2,10 @@
 #Compute-pair wise correlations of scores, and
 #report (1) the maximum, (2) the order of the components, and (3) correlation of eigenfunctions for these components
 
-#FPCcorrelation.r
+#KLTmaxCorrelation.r
 
 #n=$(ls *pc_scores.txt )
-#Rscript FPCcorrelation.r $(echo $n)
+#Rscript KLTmaxCorrelation.r $(echo $n)
 
 #library(Matrix)
 
