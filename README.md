@@ -33,7 +33,14 @@
 $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 </code>
 
-<h5> Output: </h5>
+<h5> Output files: </h5>
+<p> X:  </p>
+<p> Y:   </p>
+<p> Z:  </p>
+
+
+
+
 
 <li>
 <h4> propVarPlot.r </h5>
@@ -64,7 +71,7 @@ propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of 
 <h5> Example: </h5>
 
 <code>
-Rscript FPCcorrelation.r H3K4me1 H3K4me2 H3K4me3
+$ Rscript FPCcorrelation.r H3K4me1 H3K4me2 H3K4me3
 </code>
 
 <h5> Output files: </h5>
