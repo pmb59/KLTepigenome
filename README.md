@@ -54,19 +54,17 @@ propVarPlot.pdf
 
 
 <li>
-<h4> corrMatrix.r </h5>
+<h4> FPCcorrelation.r </h5>
 </li>
 
 <h5> Parameters </h5>
-<p> [1]:  </p> 
-<p> [2]:  </p> 
-<p> [3]:  </p> 
-<p> [4]: p-value  </p> 
+<p> [1...N]: A list of prefixes og the files *pc_scores.txt  </p> 
+ 
 
 <h5> Example: </h5>
 
 <code>
-Rscript corrMatrix.r H3K9ac_mark H3K4me3_mark H3K9ac-H3K4me3 1e-6
+Rscript FPCcorrelation.r H3K4me1 H3K4me2 H3K4me3
 </code>
 
 </ul>
