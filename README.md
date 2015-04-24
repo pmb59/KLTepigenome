@@ -120,7 +120,7 @@ But I only want to change one word's color
 
 You'll use a color (hex) code to do the trick. Follow this formula:
 
-<FONT COLOR="#800080">tcor_Scores.csv </FONT>: A  </p>
+<p> <FONT COLOR=red> cor_Scores.csv </FONT>: A  </p>
 <p> cor_Scores_#Eigenfunctions.csv:  </p>
 <p> cor_Eigenfunctions.csv:  </p>
 
