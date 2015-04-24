@@ -61,7 +61,7 @@ propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of 
 
 
 <li>
-<h4> FPCcorrelation.r </h5>
+<h4> KLTmaxCorrelation.r </h5>
 </li>
 
 <h5> Parameters required</h5>
@@ -71,7 +71,7 @@ propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of 
 <h5> Example: </h5>
 
 <code>
-$ Rscript FPCcorrelation.r H3K4me1 H3K4me2 H3K4me3
+$ Rscript KLTmaxCorrelation.r H3K4me1 H3K4me2 H3K4me3
 </code>
 
 <h5> Output files: </h5>
