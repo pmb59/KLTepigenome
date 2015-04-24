@@ -68,61 +68,9 @@ Rscript FPCcorrelation.r H3K4me1 H3K4me2 H3K4me3
 </code>
 
 <h5> Output files: </h5>
-<p> 
-Understand how to handle big data and improve organizational agility to support demands of a dynamic enterprise. Read our eBook today.
-
-    Post a comment
-    Email Article
-    Print Article
-    Share ArticlesShare articles
-
-How To Change Text Color Using HTML and CSS
-
-By HTMLGoodies Staff
-
-Cascading Style Sheets (CSS) is the preferred method of changing text color, so first we will show the (archival) method of changing text color using inline HTML color codes, then we will move on to how to achieve the same effect using CSS.
-Using Text Color (Hex) Codes
-
-In order to change text colors, you will need two things:
-
-1. A command to change the text.
-2. A color (hex) code.
-
-The color codes, as I mentioned above, are technically called hex codes. The codes are not very user friendly, so you'll need a chart to tell you what code makes what color. Well, I happen to have one right here: Click to go.
-
-So You Want A Color Code, Huh?
-
-Drop by, grab a six-pack of color code, and come on back.
-Old School: Changing Text Colors on the Whole Page
-
-You have the ability to change full-page text colors over four levels:
-
-<TEXT="######"> -- This denotes the full-page text color.
-
-<LINK="######"> -- This denotes the color of the links on your page.
-
-<ALINK="######"> -- This denotes the color the link will flash when clicked upon.
-
-<VLINK="######"> -- This denotes the colors of the links after they have been visited.
-
-These commands come right after the <TITLE> commands. Again, in that position they affect everything on the page. Also... place them all together inside the same command along with any background commands. Something like this:
-
-< BODY BGCOLOR="######" TEXT="######" LINK="######" VLINK="######">
-
-Please note: When you write these codes, you can write them with a # sign in front of the hex code or not. It used to be that the symbol was required, but not any more. I still use it just because I started that way. You may want to just go with the six-digit code. Also make sure to place a space between each command and be sure to enclose it in quotation marks, like so:
-
-<VLINK="#FFFFFF">
-Old School: Changing Specific Word Color
-
-But I only want to change one word's color
-
-!
-
-You'll use a color (hex) code to do the trick. Follow this formula:
-
-<p> <FONT COLOR=red> cor_Scores.csv </FONT>: A  </p>
-<p> cor_Scores_#Eigenfunctions.csv:  </p>
-<p> cor_Eigenfunctions.csv:  </p>
+<p> cor_Scores.csv: matrix of maximum values of Pearson correlation coefficients between functional principal component scores  </p>
+<p> cor_Scores_#Eigenfunctions.csv: order of the Eigenfunctions in which the maximum correlation takes place   </p>
+<p> cor_Eigenfunctions.csv: Pearson correlation coefficients between the eigenfunctions in cor_Scores_#Eigenfunctions.csv </p>
 
 
 </ul>
