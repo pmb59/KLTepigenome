@@ -1,7 +1,7 @@
 <h3>Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve Transform</h3>
 
 <h5> Requirements </h5>
-- <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda: Functional Data Analysis </a> 
+- <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda </a> 
 - <a href="http://cran.r-project.org/web/packages/ggplot2/index.html"> R package ggplot2 </a> 
 - <a href="http://github.com/BIMSBbioinfo/genomation"> R package genomation </a>  
 - <a href="http://cran.r-project.org/web/packages/RColorBrewer/index.html"> R package RColorBrewer </a> 
