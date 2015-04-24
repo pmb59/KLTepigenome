@@ -1,4 +1,4 @@
-<h3>Uncovering the variation within epigenomic datasets using the Karhunen-Loeve Transform</h3>
+<h3>Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve Transform</h3>
 
 <h5> Requirements </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda: Functional Data Analysis </a> 
