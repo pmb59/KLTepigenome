@@ -15,7 +15,7 @@
 <h4> KLTepigenome.r </h5>
 </li>
 
-<h5> Parameters </h5>
+<h5> Parameters required</h5>
 <p> [1]: bigWig File </p> 
 <p> [2]: File with regions in BED Format (columns 1,2,3,6 are required: chr, start, end, strand) </p> 
 <p> [3]: Length of genomic regions to analyze (Integer)</p> 
@@ -39,8 +39,8 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 <h4> propVarPlot.r </h5>
 </li>
 
-<h5> Parameters </h5>
-<p> [1]: List of *_varprop.txt files with proportions of variance </p> 
+<h5> Parameters required</h5>
+<p> [1...N]: List of N *_varprop.txt files with proportions of variance </p> 
 
 <h5> Example: </h5>
 
@@ -48,7 +48,7 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z_mark_varprop.txt
 </code>
 
-<h5> Output: </h5>
+<h5> Output files: </h5>
 propVarPlot.pdf
 
 
@@ -57,8 +57,8 @@ propVarPlot.pdf
 <h4> FPCcorrelation.r </h5>
 </li>
 
-<h5> Parameters </h5>
-<p> [1...N]: A list of prefixes og the files *pc_scores.txt  </p> 
+<h5> Parameters required</h5>
+<p> [1...N]: List of N *_pc_scores.txt files with principal component scores  </p> 
  
 
 <h5> Example: </h5>
@@ -66,5 +66,8 @@ propVarPlot.pdf
 <code>
 Rscript FPCcorrelation.r H3K4me1 H3K4me2 H3K4me3
 </code>
+
+<h5> Output files: </h5>
+
 
 </ul>
