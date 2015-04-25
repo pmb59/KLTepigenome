@@ -21,9 +21,9 @@ The script KLTepigenome.r must be run first on each bigWig file, before using th
 <h5> Parameters required</h5>
 <p> [1]: bigWig Formatted File </p> 
 <p> [2]: File with regions in BED Format (columns 1,2,3,6 are required: chr, start, end, strand) </p> 
-<p> [3]: Length of genomic regions to analyze (Integer)</p> 
-<p> [4]: Number of B-spline basis (Integer)</p> 
-<p> [5]: Check integrity of the files (T/F). If True, requires a *.chrom.sizes file in the folder.</p> 
+<p> [3]: Length (base pairs) of genomic regions to analyze (integer)</p> 
+<p> [4]: Number of B-spline basis (integer)</p> 
+<p> [5]: Check integrity of the files (T/F). If True (T), requires a *.chrom.sizes file in the folder.</p> 
 <p> [6]: Remove ENCODE Blacklisted regions (T/F)</p> 
 <p> [7]: Prefix of output files</p> 
 <p> [8]: Number of functional principal components to compute</p> 
