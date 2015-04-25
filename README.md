@@ -1,5 +1,5 @@
 <h3>Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve Transform</h3>
-These set of R scripts allow to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by using a functional eigenvalue decomposition of genomic data.
+This set of R scripts allow to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by means of a functional eigenvalue decomposition of genomic data.
 
 <h5> Requirements </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda </a> 
