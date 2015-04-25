@@ -61,7 +61,7 @@ $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z
 </code>
 
 <h5> Output files: </h5>
-propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of variance explained (%)
+<p> propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of variance explained (%) </p>
 
 
 
