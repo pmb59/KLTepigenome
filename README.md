@@ -9,7 +9,6 @@ R scripts allowing to explore patterns of epigenomic variability and covariabili
 - <a href="http://bedtools.readthedocs.org/en/latest/"> Bedtools </a> 
 - <a href="http://hgdownload.cse.ucsc.edu/admin/exe/"> UCSC bigWigSummary </a> 
 
-<p> Scripts: </p> 
 
 <ul style="list-style-type:circle">
 <li>
