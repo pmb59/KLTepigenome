@@ -39,9 +39,9 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 <h5> Output files: </h5>
 <p> {prefix}_intersect.bed: Final set of genomic regions (if imput parameters [5,6] are FALSE, then this file is the same as the initial BED file) </p>
 <p> {prefix}_heatmap.pdf: Heat map showing the genomic regions (read-enrichment profiles) considered in the analysis </p>
-<p> {prefix}_varprop.txt: Proportions of variance explained by the fucntional principal components   </p>
-<p> {prefix}_scores.txt: Matrix of functional principal component scores for each genomic regions  </p>
-<p> {prefix}_components.txt: Vector-values of principal components at each nucleotide </p>
+<p> {prefix}_varprop.txt: Proportions of variance explained by the functional principal components   </p>
+<p> {prefix}_scores.txt: Matrix of functional principal component scores for each genomic region  </p>
+<p> {prefix}_components.txt: Value of principal components at each nucleotide </p>
 <p> {prefix}_components.pdf: Plot of functional principal components as indicated in input parameter [9]</p>
 <p> {prefix}_mean_sd.png: Plot of the functional mean of the data, and the interval indicating the functional standard deviation. </p>
 <p> {prefix}_barplot.pdf: Barplot of proportion (%) of variace explained by the components computed (input parameter [8]) </p> 
@@ -52,7 +52,7 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 </li>
 
 <h5> Parameters required</h5>
-<p> [1...N]: List of N *_varprop.txt files with proportions of variance </p> 
+<p> [1...N]: List of N *_varprop.txt files with proportions of variance, obtained after running KLTepigenome.r </p> 
 
 <h5> Example: </h5>
 
@@ -70,7 +70,7 @@ $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z
 </li>
 
 <h5> Parameters required</h5>
-<p> [1...N]: List of N *_pc_scores.txt files with principal component scores  </p> 
+<p> [1...N]: List of N prefixes of *_pc_scores.txt files with principal component scores, obtained after running KLTepigenome.r  </p> 
  
 
 <h5> Example: </h5>
