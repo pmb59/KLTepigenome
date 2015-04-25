@@ -1,5 +1,5 @@
 <h3>Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve Transform</h3>
-The script KLTepigenome.r must be run first successfully on each bigWig file, before using the rest of scripts.
+These set of R scripts allow to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by using a functional eigenvalue decomposition of genomic data.
 
 <h5> Requirements </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda </a> 
@@ -14,6 +14,8 @@ The script KLTepigenome.r must be run first successfully on each bigWig file, be
 <ul style="list-style-type:circle">
 <li>
 <h4> KLTepigenome.r </h4>
+The script KLTepigenome.r must be run first on each bigWig file, before using the rest of scripts.
+
 </li>
 
 <h5> Parameters required</h5>
@@ -41,7 +43,7 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 <p> {prefix}_scores.txt:  </p>
 <p> {prefix}_components.txt:  </p>
 <p> {prefix}_components.pdf:  </p>
-<p> {prefix}__mean_sd.png </p>
+<p> {prefix}_mean_sd.png </p>
 <p> {prefix}_barplot.pdf </p> 
 
 
