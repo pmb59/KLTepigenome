@@ -1,4 +1,5 @@
 <h3>Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve Transform</h3>
+The script KLTepigenome.r must be run first successfully on each bigWig file, before using the rest of scripts.
 
 <h5> Requirements </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda </a> 
@@ -12,11 +13,11 @@
 
 <ul style="list-style-type:circle">
 <li>
-<h4> KLTepigenome.r </h5>
+<h4> KLTepigenome.r </h4>
 </li>
 
 <h5> Parameters required</h5>
-<p> [1]: bigWig File </p> 
+<p> [1]: bigWig Formatted File </p> 
 <p> [2]: File with regions in BED Format (columns 1,2,3,6 are required: chr, start, end, strand) </p> 
 <p> [3]: Length of genomic regions to analyze (Integer)</p> 
 <p> [4]: Number of B-spline basis (Integer)</p> 
@@ -34,16 +35,21 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
 </code>
 
 <h5> Output files: </h5>
-<p> X:  </p>
-<p> Y:   </p>
-<p> Z:  </p>
+<p> {prefix}_intersect.bed </p>
+<p> {prefix}_heatmap.pdf:  </p>
+<p> {prefix}_varprop.txt:   </p>
+<p> {prefix}_scores.txt:  </p>
+<p> {prefix}_components.txt:  </p>
+<p> {prefix}_components.pdf:  </p>
+<p> {prefix}__mean_sd.png </p>
+<p> {prefix}_barplot.pdf </p> 
 
 
 
 
 
 <li>
-<h4> propVarPlot.r </h5>
+<h4> propVarPlot.r </h4>
 </li>
 
 <h5> Parameters required</h5>
@@ -61,7 +67,7 @@ propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of 
 
 
 <li>
-<h4> KLTmaxCorrelation.r </h5>
+<h4> KLTmaxCorrelation.r </h4>
 </li>
 
 <h5> Parameters required</h5>
@@ -75,9 +81,10 @@ $ Rscript KLTmaxCorrelation.r H3K4me1 H3K4me2 H3K4me3
 </code>
 
 <h5> Output files: </h5>
-<p> cor_Scores.csv: matrix of maximum values of Pearson correlation coefficients between functional principal component scores  </p>
-<p> cor_Scores_#Eigenfunctions.csv: order of the Eigenfunctions in which the maximum correlation takes place   </p>
-<p> cor_Eigenfunctions.csv: Pearson correlation coefficients between the eigenfunctions in cor_Scores_#Eigenfunctions.csv </p>
+<p> cor_Scores.csv: matrix with maximum values of pairwise Pearson correlation coefficients between functional principal component scores  </p>
+<p> cor_Scores_#Eigenfunctions.csv: order of the eigenfunctions in which the maximum correlation takes place   </p>
+<p> cor_Eigenfunctions.csv: Pearson correlation coefficients between the eigenfunctions in cor_Scores_#Eigenfunctions.csv. This value is used to measure the co-localization of the eigenfunctions </p>
 
 
 </ul>
+
