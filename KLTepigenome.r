@@ -1,6 +1,6 @@
 #R script to perform functional Karhunen-Loeve Transform (KLT) in epigenomic data
 #
-#Please cite: "Uncovering the variation within epigenomic datasets using the Karhunen-Loeve transform"
+#Please cite: "Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve transform"
 
 args<-commandArgs(TRUE);
 options(scipen=999);
