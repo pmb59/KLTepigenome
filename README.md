@@ -32,11 +32,11 @@ The script KLTepigenome.r must be run first on each bigWig file, before using th
 <h5> Example: </h5>
 
 <code>
-$ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4_mark 50 5 100
+$ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4me3_mark 50 5 100
 </code>
 
 <h5> Output files: </h5>
-<p> {prefix}_intersect.bed: Final set of genomic regions (if imput parameters [5,6] are FALSE, then this file is the same as the initial BED file) </p>
+<p> {prefix}_intersect.bed: Final set of genomic regions (if input parameters [5,6] are FALSE, then this file is the same as the initial BED file) </p>
 <p> {prefix}_heatmap.pdf: Heat map showing the genomic regions (read-enrichment profiles) considered in the analysis </p>
 <p> {prefix}_varprop.txt: Proportions of variance explained by the functional principal components   </p>
 <p> {prefix}_scores.txt: Matrix of functional principal component scores for each genomic region  </p>
