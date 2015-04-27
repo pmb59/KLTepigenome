@@ -43,7 +43,7 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4me3_mark 50 5 1
 <p> {prefix}_components.txt: Value of principal components at each nucleotide </p>
 <p> {prefix}_components.pdf: Plot of functional principal components as indicated in input parameter [9]</p>
 <p> {prefix}_mean_sd.png: Plot of the functional mean of the data, and the interval indicating the functional standard deviation. </p>
-<p> {prefix}_barplot.pdf: Barplot of proportion (%) of variace explained by the components computed (input parameter [8]) </p> 
+<p> {prefix}_barplot.pdf: Barplot of proportion (%) of variance explained by the components computed (input parameter [8]) </p> 
 
 
 <li>
