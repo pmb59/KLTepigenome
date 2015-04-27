@@ -11,7 +11,6 @@
 
 args<-commandArgs(TRUE);
 
-#args <- c("H3K4me1","H3K4me2", "H3K4me3")
 #number of samples
 N <- length(args)
 
