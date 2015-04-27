@@ -1,4 +1,3 @@
-
 #Compute-pair wise correlations of scores, and
 #report (1) the maximum, (2) the order of the components, and (3) correlation of eigenfunctions for these components
 
@@ -91,7 +90,3 @@ write.csv(x=POSMAX, file = "cor_Scores_#Eigenfunctions.csv")
 rownames(COREIGENF) <- I
 colnames(COREIGENF) <- J
 write.csv(x=COREIGENF, file = "cor_Eigenfunctions.csv")
-
-
-
-
