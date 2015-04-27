@@ -75,7 +75,7 @@ $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z
 <h5> Example: </h5>
 
 <code>
-$ Rscript KLTmaxCorrelation.r H3K4me1 H3K4me2 H3K4me3
+$ Rscript KLTmaxCorrelation.r H3K4me1_mark H3K4me2_mark H3K4me3_mark
 </code>
 
 <h5> Output files: </h5>
