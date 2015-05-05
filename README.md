@@ -16,8 +16,6 @@ R scripts allowing to explore patterns of epigenomic variability and covariabili
 
 ## KLTepigenome.r
 
-    python call_binding.py --task infer test/CTCF_chr10_motifs.txt.gz test/Gm12878_Rep1.bam test/Gm12878_Rep2.bam
-
 <h5> Parameters required</h5>
 <p> [1]: bigWig Formatted File </p> 
 <p> [2]: File with regions in BED Format (columns 1,2,3,6 are required: chr, start, end, strand) </p> 
@@ -30,13 +28,13 @@ R scripts allowing to explore patterns of epigenomic variability and covariabili
 <p> [9]: Number of functional principal components to plot</p> 
 <p> [10]: Number of bins to be used in the heatmap</p> 
 
-<h5> Example: </h5>
+<h5> Example </h5>
 
 <code>
 $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4me3_mark 50 5 100
 </code>
 
-<h5> Output files: </h5>
+<h5> Output files </h5>
 <p> {prefix}_intersect.bed: Final set of genomic regions (if input parameters [5,6] are FALSE, then this file is the same as the initial BED file) </p>
 <p> {prefix}_heatmap.pdf: Heat map showing the genomic regions (read-enrichment profiles) considered in the analysis </p>
 <p> {prefix}_varprop.txt: Proportions of variance explained by the functional principal components   </p>
@@ -53,13 +51,13 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4me3_mark 50 5 1
 <h5> Parameters required</h5>
 <p> [1...N]: List of N *_varprop.txt files with proportions of variance, obtained after running KLTepigenome.r </p> 
 
-<h5> Example: </h5>
+<h5> Example </h5>
 
 <code>
 $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z_mark_varprop.txt
 </code>
 
-<h5> Output files: </h5>
+<h5> Output files </h5>
 <p> propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of variance explained (%) </p>
 
 
@@ -72,13 +70,15 @@ $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z
 <p> [1...N]: List of N prefixes of *_pc_scores.txt files with principal component scores, obtained after running KLTepigenome.r  </p> 
  
 
-<h5> Example: </h5>
+<h5> Example </h5>
 
+    $ Rscript KLTmaxCorrelation.r H3K4me1_mark H3K4me2_mark H3K4me3_mark
+    
 <code>
 $ Rscript KLTmaxCorrelation.r H3K4me1_mark H3K4me2_mark H3K4me3_mark
 </code>
 
-<h5> Output files: </h5>
+<h5> Output files </h5>
 <p> cor_Scores.csv: matrix with maximum values of pairwise Pearson correlation coefficients between functional principal component scores  </p>
 <p> cor_Scores_#Eigenfunctions.csv: order of the eigenfunctions in which the maximum correlation takes place   </p>
 <p> cor_Eigenfunctions.csv: Pearson correlation coefficients between the eigenfunctions in cor_Scores_#Eigenfunctions.csv. This value is used to measure the co-localization of the eigenfunctions </p>
