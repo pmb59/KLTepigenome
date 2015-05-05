@@ -13,9 +13,8 @@ R scripts allowing to explore patterns of epigenomic variability and covariabili
 - <a href="http://hgdownload.cse.ucsc.edu/admin/exe/"> UCSC bigWigSummary </a> 
 
 
-<ul style="list-style-type:circle">
 
-## KLTepigenome.r ##
+## KLTepigenome.r
 
 
 
@@ -83,7 +82,4 @@ $ Rscript KLTmaxCorrelation.r H3K4me1_mark H3K4me2_mark H3K4me3_mark
 <p> cor_Scores.csv: matrix with maximum values of pairwise Pearson correlation coefficients between functional principal component scores  </p>
 <p> cor_Scores_#Eigenfunctions.csv: order of the eigenfunctions in which the maximum correlation takes place   </p>
 <p> cor_Eigenfunctions.csv: Pearson correlation coefficients between the eigenfunctions in cor_Scores_#Eigenfunctions.csv. This value is used to measure the co-localization of the eigenfunctions </p>
-
-
-</ul>
 
