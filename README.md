@@ -30,9 +30,8 @@ R scripts allowing to explore patterns of epigenomic variability and covariabili
 
 <h5> Example </h5>
 
-<code>
-$ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4me3_mark 50 5 100
-</code>
+    $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4me3_mark 50 5 100
+    
 
 <h5> Output files </h5>
 <p> {prefix}_intersect.bed: Final set of genomic regions (if input parameters [5,6] are FALSE, then this file is the same as the initial BED file) </p>
@@ -53,9 +52,9 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4me3_mark 50 5 1
 
 <h5> Example </h5>
 
-<code>
-$ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z_mark_varprop.txt
-</code>
+    $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z_mark_varprop.txt
+    
+
 
 <h5> Output files </h5>
 <p> propVarPlot.pdf: A scatterplot of the Component number vs the Cumulative sum of variance explained (%) </p>
@@ -74,9 +73,6 @@ $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z
 
     $ Rscript KLTmaxCorrelation.r H3K4me1_mark H3K4me2_mark H3K4me3_mark
     
-<code>
-$ Rscript KLTmaxCorrelation.r H3K4me1_mark H3K4me2_mark H3K4me3_mark
-</code>
 
 <h5> Output files </h5>
 <p> cor_Scores.csv: matrix with maximum values of pairwise Pearson correlation coefficients between functional principal component scores  </p>
