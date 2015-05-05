@@ -1,7 +1,7 @@
 # KLTepigenome
 
 <h3>Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve Transform</h3>
-Next-generation sequencing is enabling the scientific community to go a step further in the understanding of molecular mechanisms controlling transcriptional and epigenetic regulation. Chromatin immunoprecipitation followed by sequencing (ChIP-seq) is commonly applied to map histone modifications or transcription factor binding sites for a protein of interest. [KLTepigenome](http://github.com/pmb59/KLTepigenome) is a set of R scripts allowing to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by means of a functional eigenvalue decomposition of genomic data. The script KLTepigenome.r must be run first on each bigWig file, before using the rest of scripts.
+Next-generation sequencing is enabling the scientific community to go a step further in the understanding of molecular mechanisms controlling transcriptional and epigenetic regulation. Chromatin immunoprecipitation followed by sequencing (ChIP-seq) is commonly applied to map histone modifications or transcription factor binding sites for a protein of interest. **KLTepigenome** is a set of R scripts allowing to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by means of a functional eigenvalue decomposition of genomic data. The script KLTepigenome.r must be run first on each bigWig file, before using the rest of scripts.
 
 
 <h5> Dependencies </h5>
