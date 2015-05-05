@@ -4,7 +4,7 @@
 R scripts allowing to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by means of a functional eigenvalue decomposition of genomic data. The script KLTepigenome.r must be run first on each bigWig file, before using the rest of scripts.
 
 
-<h5> Requirements </h5>
+<h5> Dependencies </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda </a> 
 - <a href="http://cran.r-project.org/web/packages/ggplot2/index.html"> R package ggplot2 </a> 
 - <a href="http://github.com/BIMSBbioinfo/genomation"> R package genomation </a>  
