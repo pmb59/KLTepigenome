@@ -1,7 +1,8 @@
 # KLTepigenome
 
 <h3>Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve Transform</h3>
-R scripts allowing to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by means of a functional eigenvalue decomposition of genomic data.
+R scripts allowing to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by means of a functional eigenvalue decomposition of genomic data. The script KLTepigenome.r must be run first on each bigWig file, before using the rest of scripts.
+
 
 <h5> Requirements </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda </a> 
@@ -13,11 +14,10 @@ R scripts allowing to explore patterns of epigenomic variability and covariabili
 
 
 <ul style="list-style-type:circle">
-<li>
-<h4> KLTepigenome.r </h4>
-The script KLTepigenome.r must be run first on each bigWig file, before using the rest of scripts.
 
-</li>
+## KLTepigenome.r ##
+
+
 
 <h5> Parameters required</h5>
 <p> [1]: bigWig Formatted File </p> 
@@ -48,9 +48,8 @@ $ Rscript KLTepigenome.r H3K4me3.bw regions.bed 5000 100 T T H3K4me3_mark 50 5 1
 <p> {prefix}_barplot.pdf: Barplot of proportion (%) of variance explained by the components computed (input parameter [8]) </p> 
 
 
-<li>
-<h4> propVarPlot.r </h4>
-</li>
+
+## propVarPlot.r
 
 <h5> Parameters required</h5>
 <p> [1...N]: List of N *_varprop.txt files with proportions of variance, obtained after running KLTepigenome.r </p> 
@@ -66,9 +65,9 @@ $ Rscript propVarPlot.r H3K4me3_mark_varprop.txt H3K27me3_mark_varprop.txt H2A.Z
 
 
 
-<li>
-<h4> KLTmaxCorrelation.r </h4>
-</li>
+
+## KLTmaxCorrelation.r 
+
 
 <h5> Parameters required</h5>
 <p> [1...N]: List of N prefixes of *_pc_scores.txt files with principal component scores, obtained after running KLTepigenome.r  </p> 
