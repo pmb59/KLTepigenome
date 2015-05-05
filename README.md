@@ -16,7 +16,7 @@ R scripts allowing to explore patterns of epigenomic variability and covariabili
 
 ## KLTepigenome.r
 
-
+    python call_binding.py --task infer test/CTCF_chr10_motifs.txt.gz test/Gm12878_Rep1.bam test/Gm12878_Rep2.bam
 
 <h5> Parameters required</h5>
 <p> [1]: bigWig Formatted File </p> 
