@@ -80,4 +80,4 @@ Next-generation sequencing is enabling the scientific community to go a step fur
 <p> cor_Eigenfunctions.csv: Pearson correlation coefficients between the eigenfunctions in cor_Scores_#Eigenfunctions.csv. This value is used to measure the co-localization of the eigenfunctions </p>
 
 # Citation:
-Madrigal P, Krajewski P (2015) Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve transform. **BioData Mining** 8:20. DOI: <a href="10.1186/s13040-015-0051-7"> http://dx.doi.org/10.1186/s13040-015-0051-7 </a> 
+Madrigal P, Krajewski P (2015) Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve transform. **BioData Mining** 8:20. DOI: <a href="http://dx.doi.org/10.1186/s13040-015-0051-7"> http://dx.doi.org/10.1186/s13040-015-0051-7 </a> 
