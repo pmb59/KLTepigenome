@@ -5,7 +5,7 @@ Next-generation sequencing is enabling the scientific community to go a step fur
 
 If you use this software for research, please cite the following paper: 
 
-Madrigal P, Krajewski P (2015) <a href="http://dx.doi.org/10.1186/s13040-015-0051-7"> Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve transform.</a>  **BioData Mining** 8:20. DOI: <a href="http://dx.doi.org/10.1186/s13040-015-0051-7"> http://dx.doi.org/10.1186/s13040-015-0051-7 
+Madrigal P, Krajewski P (2015) <a href="http://dx.doi.org/10.1186/s13040-015-0051-7"> Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve transform.</a>  **BioData Mining** 8:20. DOI: http://dx.doi.org/10.1186/s13040-015-0051-7 
 
 <h5> Dependencies </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda </a> 
