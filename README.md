@@ -3,6 +3,8 @@
 <h3>Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve Transform</h3>
 Next-generation sequencing is enabling the scientific community to go a step further in the understanding of molecular mechanisms controlling transcriptional and epigenetic regulation. Chromatin immunoprecipitation followed by sequencing (ChIP-seq) is commonly applied to map histone modifications or transcription factor binding sites for a protein of interest. **KLTepigenome** is a set of R scripts allowing to explore patterns of epigenomic variability and covariability in next-generation sequencing data sets by means of a functional eigenvalue decomposition of genomic data. The script KLTepigenome.r must be run first on each bigWig file, before using the rest of scripts.
 
+If you use this software for research, please cite the following paper
+Madrigal P, Krajewski P (2015) <a href="http://dx.doi.org/10.1186/s13040-015-0051-7"> Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve transform.</a>  **BioData Mining** 8:20. DOI: <a href="http://dx.doi.org/10.1186/s13040-015-0051-7"> http://dx.doi.org/10.1186/s13040-015-0051-7 
 
 <h5> Dependencies </h5>
 - <a href="http://cran.r-project.org/web/packages/fda/index.html"> R package fda </a> 
@@ -79,5 +81,4 @@ Next-generation sequencing is enabling the scientific community to go a step fur
 <p> cor_Scores_#Eigenfunctions.csv: order of the eigenfunctions in which the maximum correlation takes place   </p>
 <p> cor_Eigenfunctions.csv: Pearson correlation coefficients between the eigenfunctions in cor_Scores_#Eigenfunctions.csv. This value is used to measure the co-localization of the eigenfunctions </p>
 
-# Citation:
-Madrigal P, Krajewski P (2015) Uncovering correlated variability in epigenomic datasets using the Karhunen-Loeve transform. **BioData Mining** 8:20. DOI: <a href="http://dx.doi.org/10.1186/s13040-015-0051-7"> http://dx.doi.org/10.1186/s13040-015-0051-7 </a> 
+
