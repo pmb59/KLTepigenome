@@ -14,5 +14,5 @@ wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/wigToBigWig
 n=$(ls *.wig | sed -e 's/\..*$//')
 
 for FILE in $(echo $n) ; do
-wigToBigWig ${FILE}.wig hg19.chrom.sizes ${FILE}.bw
+    wigToBigWig ${FILE}.wig hg19.chrom.sizes ${FILE}.bw
 done
